@@ -69,4 +69,19 @@ describe('Course Catalog Specification & Integrity', () => {
     expect(ukCode).toBeDefined();
     expect(inCode).toBeDefined();
   });
+
+  it('should have dedicated and distinct cover images for all 6 courses', () => {
+    const coverImages = COURSES.map((c) => c.coverImage);
+    const uniqueCovers = new Set(coverImages);
+
+    // Assert every course has a defined coverImage
+    COURSES.forEach((course) => {
+      expect(course.coverImage).toBeDefined();
+      expect(course.coverImage.startsWith('/courses/')).toBe(true);
+      expect(course.coverImage.endsWith('.svg')).toBe(true);
+    });
+
+    // Assert all 6 cover images are unique (no duplicates)
+    expect(uniqueCovers.size).toBe(6);
+  });
 });

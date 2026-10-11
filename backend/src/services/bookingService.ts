@@ -22,6 +22,9 @@ export interface CreateBookingParams {
   startTime: string; // ISO 8601 UTC
   studentGrade?: string;
   notes?: string;
+  studentName?: string;
+  phoneNumber?: string;
+  courseName?: string;
 }
 
 export const bookingService = {
@@ -75,6 +78,10 @@ export const bookingService = {
     if (parentOverlap) {
       // If the parent is submitting for the exact same start time, treat as idempotent retry
       if (parentOverlap.startAt.getTime() === startAtUtc.getTime()) {
+        const courseName = params.courseName || (params.notes?.match(/Course:\s*([^|]+)/i)?.[1]?.trim()) || 'Trial Class';
+        const studentName = params.studentName || (params.notes?.match(/Student:\s*([^|]+)/i)?.[1]?.trim()) || undefined;
+        const phoneNumber = params.phoneNumber || (params.notes?.match(/Phone:\s*([^|]+)/i)?.[1]?.trim()) || undefined;
+
         return {
           id: parentOverlap.id,
           status: parentOverlap.status,
@@ -83,10 +90,15 @@ export const bookingService = {
           endAtUtc: parentOverlap.endAt.toISOString(),
           parentTimezone: parentOverlap.parent.timezone,
           mentorTimezone: parentOverlap.mentor.timezone,
+          courseName,
+          studentName,
+          phoneNumber,
+          studentGrade: params.studentGrade,
           parent: {
             id: parentOverlap.parent.id,
             name: parentOverlap.parent.name,
             email: parentOverlap.parent.email,
+            phoneNumber,
             timezone: parentOverlap.parent.timezone,
             localDate: getLocalDateString(parentOverlap.startAt, parentOverlap.parent.timezone),
             localStartTime: getLocalTimeString(parentOverlap.startAt, parentOverlap.parent.timezone),
@@ -98,6 +110,7 @@ export const bookingService = {
             id: parentOverlap.mentor.id,
             name: parentOverlap.mentor.name,
             timezone: parentOverlap.mentor.timezone,
+            bio: 'Verified Codeyoung Educator specializing in live interactive STEM and coding instruction.',
             localDate: getLocalDateString(parentOverlap.startAt, parentOverlap.mentor.timezone),
             localStartTime: getLocalTimeString(parentOverlap.startAt, parentOverlap.mentor.timezone),
             localEndTime: getLocalTimeString(parentOverlap.endAt, parentOverlap.mentor.timezone),
@@ -250,6 +263,10 @@ export const bookingService = {
       throw err;
     });
 
+    const courseName = params.courseName || (params.notes?.match(/Course:\s*([^|]+)/i)?.[1]?.trim()) || 'Trial Class';
+    const studentName = params.studentName || (params.notes?.match(/Student:\s*([^|]+)/i)?.[1]?.trim()) || undefined;
+    const phoneNumber = params.phoneNumber || (params.notes?.match(/Phone:\s*([^|]+)/i)?.[1]?.trim()) || undefined;
+
     return {
       id: confirmedBooking.id,
       status: confirmedBooking.status,
@@ -258,10 +275,15 @@ export const bookingService = {
       endAtUtc: confirmedBooking.endAt.toISOString(),
       parentTimezone: confirmedBooking.parent.timezone,
       mentorTimezone: confirmedBooking.mentor.timezone,
+      courseName,
+      studentName,
+      phoneNumber,
+      studentGrade: params.studentGrade,
       parent: {
         id: confirmedBooking.parent.id,
         name: confirmedBooking.parent.name,
         email: confirmedBooking.parent.email,
+        phoneNumber,
         timezone: confirmedBooking.parent.timezone,
         localDate: getLocalDateString(confirmedBooking.startAt, confirmedBooking.parent.timezone),
         localStartTime: getLocalTimeString(confirmedBooking.startAt, confirmedBooking.parent.timezone),
@@ -273,6 +295,7 @@ export const bookingService = {
         id: confirmedBooking.mentor.id,
         name: confirmedBooking.mentor.name,
         timezone: confirmedBooking.mentor.timezone,
+        bio: 'Verified Codeyoung Educator specializing in live interactive STEM and coding instruction.',
         localDate: getLocalDateString(confirmedBooking.startAt, confirmedBooking.mentor.timezone),
         localStartTime: getLocalTimeString(confirmedBooking.startAt, confirmedBooking.mentor.timezone),
         localEndTime: getLocalTimeString(confirmedBooking.endAt, confirmedBooking.mentor.timezone),
@@ -325,6 +348,7 @@ export const bookingService = {
         id: booking.mentor.id,
         name: booking.mentor.name,
         timezone: booking.mentor.timezone,
+        bio: 'Verified Codeyoung Educator specializing in live interactive STEM and coding instruction.',
         localDate: getLocalDateString(booking.startAt, booking.mentor.timezone),
         localStartTime: getLocalTimeString(booking.startAt, booking.mentor.timezone),
         localEndTime: getLocalTimeString(booking.endAt, booking.mentor.timezone),

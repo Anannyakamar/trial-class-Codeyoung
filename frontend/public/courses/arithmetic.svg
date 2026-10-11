@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="ari-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8F6"/>
+      <stop offset="50%" stop-color="#FFF0EC"/>
+      <stop offset="100%" stop-color="#F1ECFA"/>
+    </linearGradient>
+    <linearGradient id="cube-coral" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7D60"/>
+      <stop offset="100%" stop-color="#E84723"/>
+    </linearGradient>
+    <linearGradient id="cube-lav" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B099E2"/>
+      <stop offset="100%" stop-color="#7B5ABF"/>
+    </linearGradient>
+    <linearGradient id="cube-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <filter id="ari-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#2A2833" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#ari-bg)"/>
+
+  <!-- Abacus Rods Background -->
+  <g transform="translate(100, 100)" opacity="0.35">
+    <rect width="600" height="12" rx="6" fill="#71707A"/>
+    <rect y="100" width="600" height="12" rx="6" fill="#71707A"/>
+    <rect y="200" width="600" height="12" rx="6" fill="#71707A"/>
+    <!-- Abacus Beads -->
+    <ellipse cx="80" cy="6" rx="20" ry="16" fill="#FF7D60"/>
+    <ellipse cx="130" cy="6" rx="20" ry="16" fill="#FF7D60"/>
+    <ellipse cx="280" cy="106" rx="20" ry="16" fill="#8E7DBE"/>
+    <ellipse cx="330" cy="106" rx="20" ry="16" fill="#8E7DBE"/>
+    <ellipse cx="480" cy="206" rx="20" ry="16" fill="#FBBF24"/>
+  </g>
+
+  <!-- 3D Number Blocks Group -->
+  <!-- Block 1: "7" -->
+  <g transform="translate(260, 200)" filter="url(#ari-shadow)">
+    <!-- Isometric Top -->
+    <polygon points="0,-40 50,-65 100,-40 50,-15" fill="#FFA18D"/>
+    <!-- Isometric Left -->
+    <polygon points="0,-40 50,-15 50,65 0,40" fill="url(#cube-coral)"/>
+    <!-- Isometric Right -->
+    <polygon points="50,-15 100,-40 100,40 50,65" fill="#D9401F"/>
+    <text x="50" y="32" font-family="'Plus Jakarta Sans', sans-serif" font-size="36" font-weight="900" fill="#FFFFFF" text-anchor="middle">7</text>
+  </g>
+
+  <!-- Block 2: "9" -->
+  <g transform="translate(380, 160)" filter="url(#ari-shadow)">
+    <polygon points="0,-40 50,-65 100,-40 50,-15" fill="#CFBFEE"/>
+    <polygon points="0,-40 50,-15 50,65 0,40" fill="url(#cube-lav)"/>
+    <polygon points="50,-15 100,-40 100,40 50,65" fill="#6445A2"/>
+    <text x="50" y="32" font-family="'Plus Jakarta Sans', sans-serif" font-size="36" font-weight="900" fill="#FFFFFF" text-anchor="middle">9</text>
+  </g>
+
+  <!-- Block 3: "×" or "3" -->
+  <g transform="translate(480, 240)" filter="url(#ari-shadow)">
+    <polygon points="0,-35 45,-55 90,-35 45,-15" fill="#FDE68A"/>
+    <polygon points="0,-35 45,-15 45,55 0,35" fill="url(#cube-gold)"/>
+    <polygon points="45,-15 90,-35 90,35 45,55" fill="#B45309"/>
+    <text x="45" y="28" font-family="'Plus Jakarta Sans', sans-serif" font-size="32" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text>
+  </g>
+
+  <!-- Mathematical Operations Floating Badges -->
+  <g transform="translate(160, 280)" filter="url(#ari-shadow)">
+    <circle cx="35" cy="35" r="35" fill="#FFFFFF"/>
+    <text x="35" y="46" font-family="'Plus Jakarta Sans', sans-serif" font-size="36" font-weight="900" fill="#E84723" text-anchor="middle">+</text>
+  </g>
+
+  <g transform="translate(580, 140)" filter="url(#ari-shadow)">
+    <circle cx="30" cy="30" r="30" fill="#FFFFFF"/>
+    <text x="30" y="40" font-family="'Plus Jakarta Sans', sans-serif" font-size="30" font-weight="900" fill="#7B5ABF" text-anchor="middle">×</text>
+  </g>
+
+  <g transform="translate(340, 340)" filter="url(#ari-shadow)">
+    <rect width="120" height="46" rx="14" fill="#FFFFFF"/>
+    <text x="60" y="30" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="900" fill="#2A2833" text-anchor="middle">7 × 9 = 63</text>
+  </g>
+</svg>

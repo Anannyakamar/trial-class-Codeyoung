@@ -1,23 +1,28 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { api, BookableSlot, ApiError } from '../api/client.js';
+import { useLocation, Link, useSearchParams } from 'react-router-dom';
+import { api, BookableSlot, ApiError, BookingData } from '../api/client.js';
 import { getUserBrowserTimezone } from '../utils/timezone.js';
 import { TimezoneSelector } from '../components/booking/TimezoneSelector.js';
 import { DatePicker } from '../components/booking/DatePicker.js';
 import { SlotGrid } from '../components/booking/SlotGrid.js';
 import { BookingForm, BookingFormData, BookingIntentData } from '../components/booking/BookingForm.js';
-import { Sparkles, ShieldCheck, Video, Clock, ArrowLeft, BookOpen, AlertCircle } from 'lucide-react';
+import { BookingConfirmationView } from '../components/booking/BookingConfirmationView.js';
+import { Sparkles, ShieldCheck, Video, Clock, ArrowLeft } from 'lucide-react';
 
 export const BookingPage: React.FC = () => {
-  const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
 
   // Retrieve passed booking intent from Step 1 (Landing Page)
   const bookingIntent: BookingIntentData | undefined = (
     location.state as { bookingIntent?: BookingIntentData } | null
   )?.bookingIntent;
 
-  // State
+  // Confirmed booking state (Dedicated confirmation screen on Page 2)
+  const [confirmedBooking, setConfirmedBooking] = useState<BookingData | null>(null);
+  const [loadingConfirmed, setLoadingConfirmed] = useState<boolean>(false);
+
+  // Timezone and Date State
   const [parentTimezone, setParentTimezone] = useState<string>(() => getUserBrowserTimezone());
   const [selectedDate, setSelectedDate] = useState<string>(() => {
     const today = new Date();
@@ -35,6 +40,23 @@ export const BookingPage: React.FC = () => {
   const [submittingBooking, setSubmittingBooking] = useState<boolean>(false);
   const [bookingError, setBookingError] = useState<string | null>(null);
   const [suggestedAlternatives, setSuggestedAlternatives] = useState<BookableSlot[]>([]);
+
+  // Check if URL has confirmed booking id query param
+  const confirmedIdFromUrl = searchParams.get('confirmed');
+  useEffect(() => {
+    if (confirmedIdFromUrl && !confirmedBooking) {
+      setLoadingConfirmed(true);
+      api
+        .getBooking(confirmedIdFromUrl)
+        .then((res) => {
+          if (res.success && res.data) {
+            setConfirmedBooking(res.data);
+          }
+        })
+        .catch(() => {})
+        .finally(() => setLoadingConfirmed(false));
+    }
+  }, [confirmedIdFromUrl, confirmedBooking]);
 
   // Fetch Available Slots whenever date or timezone changes
   const fetchSlots = useCallback(async () => {
@@ -67,8 +89,10 @@ export const BookingPage: React.FC = () => {
   }, [selectedDate, parentTimezone]);
 
   useEffect(() => {
-    fetchSlots();
-  }, [fetchSlots]);
+    if (!confirmedBooking) {
+      fetchSlots();
+    }
+  }, [fetchSlots, confirmedBooking]);
 
   // Handle Booking Submission
   const handleBookingSubmit = async (formData: BookingFormData) => {
@@ -78,23 +102,14 @@ export const BookingPage: React.FC = () => {
     setBookingError(null);
 
     try {
-      // Assemble notes bundling course name, student name, and phone
-      const coursePart = bookingIntent?.courseName
-        ? `Course: ${bookingIntent.courseName}`
-        : formData.courseName
-        ? `Course: ${formData.courseName}`
-        : '';
-      const phonePart = bookingIntent?.phoneNumber
-        ? `Phone: ${bookingIntent.phoneNumber}`
-        : formData.phoneNumber
-        ? `Phone: ${formData.phoneNumber}`
-        : '';
-      const studentPart = bookingIntent?.studentName
-        ? `Student: ${bookingIntent.studentName}`
-        : formData.studentName
-        ? `Student: ${formData.studentName}`
-        : '';
+      const courseName = bookingIntent?.courseName || formData.courseName || 'Mathematics';
+      const phoneNumber = bookingIntent?.phoneNumber || formData.phoneNumber || '';
+      const studentName = bookingIntent?.studentName || formData.studentName || '';
       const userNotes = formData.notes || bookingIntent?.notes || '';
+
+      const coursePart = courseName ? `Course: ${courseName}` : '';
+      const phonePart = phoneNumber ? `Phone: ${phoneNumber}` : '';
+      const studentPart = studentName ? `Student: ${studentName}` : '';
 
       const notesArr = [coursePart, phonePart, studentPart, userNotes].filter(Boolean);
       const combinedNotes = notesArr.join(' | ').slice(0, 500);
@@ -106,11 +121,21 @@ export const BookingPage: React.FC = () => {
         startTime: selectedSlot.startAt,
         studentGrade: bookingIntent?.studentGrade || formData.studentGrade,
         notes: combinedNotes,
+        studentName,
+        phoneNumber,
+        courseName,
       });
 
       if (res.success && res.data) {
-        // Navigate to confirmation receipt
-        navigate(`/confirmation/${res.data.id}`, { state: { booking: res.data } });
+        // Show dedicated confirmation screen on Page 2
+        setConfirmedBooking({
+          ...res.data,
+          courseName,
+          studentName,
+          phoneNumber,
+          studentGrade: bookingIntent?.studentGrade || formData.studentGrade,
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } catch (err: unknown) {
       const apiErr = err as ApiError;
@@ -123,13 +148,35 @@ export const BookingPage: React.FC = () => {
     }
   };
 
+  // If viewing confirmed booking details
+  if (loadingConfirmed) {
+    return (
+      <div className="py-20 flex flex-col items-center justify-center space-y-4">
+        <div className="w-10 h-10 border-3 border-coral-500 border-t-transparent rounded-full animate-spin" />
+        <p className="text-sm font-semibold text-charcoal-600">Retrieving booking receipt...</p>
+      </div>
+    );
+  }
+
+  if (confirmedBooking) {
+    return (
+      <BookingConfirmationView
+        booking={confirmedBooking}
+        courseName={bookingIntent?.courseName || confirmedBooking.courseName}
+        phoneNumber={bookingIntent?.phoneNumber || confirmedBooking.phoneNumber}
+        studentName={bookingIntent?.studentName || confirmedBooking.studentName}
+        studentGrade={bookingIntent?.studentGrade || confirmedBooking.studentGrade}
+      />
+    );
+  }
+
   return (
     <div className="space-y-10">
       {/* Workflow Navigation Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#EDE4D5] pb-4">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-charcoal-600 hover:text-coral-600 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Course Catalog</span>
@@ -139,12 +186,12 @@ export const BookingPage: React.FC = () => {
         <div className="flex items-center gap-2 text-xs font-bold">
           <Link
             to="/"
-            className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+            className="px-3 py-1 rounded-full bg-cream-100 text-charcoal-600 hover:bg-cream-200 transition-colors"
           >
             1. Parent & Course
           </Link>
-          <span className="text-slate-300">→</span>
-          <span className="px-3 py-1 rounded-full bg-sky-100 text-sky-800 border border-sky-200">
+          <span className="text-charcoal-300">→</span>
+          <span className="px-3 py-1 rounded-full bg-coral-50 text-coral-700 border border-coral-200">
             2. Date & Time Slot
           </span>
         </div>
@@ -152,14 +199,14 @@ export const BookingPage: React.FC = () => {
 
       {/* Header Banner */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-xs font-semibold">
-          <Sparkles className="w-3.5 h-3.5" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-coral-50 text-coral-700 text-xs font-bold border border-coral-200">
+          <Sparkles className="w-3.5 h-3.5 text-coral-500" />
           1-on-1 Interactive Trial Session
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-charcoal-900 tracking-tight font-display">
           Select Your Preferred Appointment Slot
         </h1>
-        <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+        <p className="text-charcoal-600 text-sm sm:text-base leading-relaxed">
           {bookingIntent?.courseName ? (
             <>
               Scheduling trial class for <strong>{bookingIntent.courseName}</strong>. Choose a convenient time in your local timezone.
@@ -171,30 +218,30 @@ export const BookingPage: React.FC = () => {
       </div>
 
       {/* Trust Badges */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto text-xs text-slate-600">
-        <div className="flex items-center gap-2 p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-          <Clock className="w-4 h-4 text-sky-600 flex-shrink-0" />
-          <span>30 Minutes Demo Class</span>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto text-xs text-charcoal-700">
+        <div className="flex items-center gap-2 p-3.5 bg-white rounded-2xl border border-[#EDE4D5] shadow-warm-sm">
+          <Clock className="w-4 h-4 text-coral-500 flex-shrink-0" />
+          <span className="font-semibold">30 Minutes Demo Class</span>
         </div>
-        <div className="flex items-center gap-2 p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-          <Video className="w-4 h-4 text-indigo-600 flex-shrink-0" />
-          <span>Instant Meeting Link</span>
+        <div className="flex items-center gap-2 p-3.5 bg-white rounded-2xl border border-[#EDE4D5] shadow-warm-sm">
+          <Video className="w-4 h-4 text-lavender-600 flex-shrink-0" />
+          <span className="font-semibold">Instant Meeting Link</span>
         </div>
-        <div className="flex items-center gap-2 p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+        <div className="flex items-center gap-2 p-3.5 bg-white rounded-2xl border border-[#EDE4D5] shadow-warm-sm">
           <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-          <span>Automated Mentor Assignment</span>
+          <span className="font-semibold">Automated Mentor Assignment</span>
         </div>
       </div>
 
       {/* Main Booking Two-Column Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Timezone, Date & Slot Selection (Step 1) */}
-        <div className="lg:col-span-7 bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 shadow-sm space-y-6">
-          <div className="border-b border-slate-100 pb-4 space-y-1">
-            <span className="text-xs font-semibold uppercase tracking-wider text-sky-600">
+        <div className="lg:col-span-7 bg-white rounded-3xl border border-[#EDE4D5] p-6 sm:p-8 shadow-warm-md space-y-6">
+          <div className="border-b border-[#EDE4D5]/70 pb-4 space-y-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-coral-600">
               Step 2 of 2
             </span>
-            <h2 className="text-xl font-bold text-slate-900">Choose Date & Time Slot</h2>
+            <h2 className="text-xl font-black text-charcoal-900">Choose Date & Time Slot</h2>
           </div>
 
           <TimezoneSelector
@@ -231,7 +278,7 @@ export const BookingPage: React.FC = () => {
             loading={submittingBooking}
             error={bookingError}
             onBackToSlots={() => setSelectedSlot(null)}
-            onEditParentInfo={() => navigate('/')}
+            onEditParentInfo={() => window.location.assign('/')}
           />
         </div>
       </div>

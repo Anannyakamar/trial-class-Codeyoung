@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cyber-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF8F5"/>
+      <stop offset="50%" stop-color="#F1ECFA"/>
+      <stop offset="100%" stop-color="#EAE5F8"/>
+    </linearGradient>
+    <linearGradient id="shield-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B4A"/>
+      <stop offset="50%" stop-color="#9273D4"/>
+      <stop offset="100%" stop-color="#6445A2"/>
+    </linearGradient>
+    <filter id="cyber-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#2A2833" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#cyber-bg)"/>
+
+  <!-- Network Circuit Lines -->
+  <g stroke="#9273D4" stroke-width="2" opacity="0.4" fill="none">
+    <path d="M 120,250 L 250,250 L 300,180 L 380,180"/>
+    <path d="M 150,150 L 260,150 L 320,200"/>
+    <path d="M 680,250 L 550,250 L 500,320 L 420,320"/>
+    <path d="M 650,350 L 540,350 L 480,300"/>
+    <!-- Node points -->
+    <circle cx="120" cy="250" r="5" fill="#FF6B4A"/>
+    <circle cx="300" cy="180" r="4" fill="#9273D4"/>
+    <circle cx="680" cy="250" r="5" fill="#FF6B4A"/>
+    <circle cx="500" cy="320" r="4" fill="#9273D4"/>
+  </g>
+
+  <!-- Big Security Shield -->
+  <g transform="translate(400, 240)" filter="url(#cyber-shadow)">
+    <!-- Shield Outer Path -->
+    <path d="M 0,-130 C 70,-130 110,-100 110,-50 C 110,60 40,110 0,135 C -40,110 -110,60 -110,-50 C -110,-100 -70,-130 0,-130 Z"
+          fill="url(#shield-grad)"/>
+
+    <!-- Inner Shield Inset -->
+    <path d="M 0,-115 C 60,-115 95,-90 95,-45 C 95,50 35,95 0,118 C -35,95 -95,50 -95,-45 C -95,-90 -60,-115 0,-115 Z"
+          fill="#FFFFFF" fill-opacity="0.15"/>
+
+    <!-- Keyhole Icon in Shield -->
+    <circle cx="0" cy="-15" r="22" fill="#FFFFFF"/>
+    <polygon points="-12,-15 12,-15 16,35 -16,35" fill="#FFFFFF"/>
+    <circle cx="0" cy="-15" r="9" fill="#2A2833"/>
+  </g>
+
+  <!-- Floating Digital Badges -->
+  <g transform="translate(160, 180)" filter="url(#cyber-shadow)">
+    <rect width="130" height="48" rx="14" fill="#FFFFFF"/>
+    <text x="65" y="30" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#2A2833" text-anchor="middle">🔒 Encrypted</text>
+  </g>
+
+  <g transform="translate(530, 150)" filter="url(#cyber-shadow)">
+    <rect width="130" height="48" rx="14" fill="#FFFFFF"/>
+    <text x="65" y="30" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#7B5ABF" text-anchor="middle">🛡️ 256-bit SSL</text>
+  </g>
+
+  <g transform="translate(490, 330)" filter="url(#cyber-shadow)">
+    <rect width="140" height="44" rx="14" fill="#FFFFFF"/>
+    <text x="70" y="28" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" fill="#E05D44" text-anchor="middle">Safe Digital Kids</text>
+  </g>
+</svg>

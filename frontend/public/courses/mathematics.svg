@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="math-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF5F2"/>
+      <stop offset="50%" stop-color="#F1ECFA"/>
+      <stop offset="100%" stop-color="#FAF8F5"/>
+    </linearGradient>
+    <linearGradient id="math-poly" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B4A"/>
+      <stop offset="100%" stop-color="#8E7DBE"/>
+    </linearGradient>
+    <linearGradient id="math-card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.7"/>
+    </linearGradient>
+    <filter id="math-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#2A2833" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#math-bg)"/>
+
+  <!-- Subtle grid lines -->
+  <g opacity="0.15" stroke="#8E7DBE" stroke-width="1" stroke-dasharray="4,4">
+    <line x1="100" y1="50" x2="100" y2="450"/>
+    <line x1="200" y1="50" x2="200" y2="450"/>
+    <line x1="300" y1="50" x2="300" y2="450"/>
+    <line x1="400" y1="50" x2="400" y2="450"/>
+    <line x1="500" y1="50" x2="500" y2="450"/>
+    <line x1="600" y1="50" x2="600" y2="450"/>
+    <line x1="700" y1="50" x2="700" y2="450"/>
+    <line x1="50" y1="100" x2="750" y2="100"/>
+    <line x1="50" y1="200" x2="750" y2="200"/>
+    <line x1="50" y1="300" x2="750" y2="300"/>
+    <line x1="50" y1="400" x2="750" y2="400"/>
+  </g>
+
+  <!-- Floating Mathematical Shapes -->
+  <!-- Dodecahedron / 3D Geometry Core -->
+  <g transform="translate(400, 240)" filter="url(#math-shadow)">
+    <!-- Central Polyhedron -->
+    <polygon points="0,-100 86,-50 86,50 0,100 -86,50 -86,-50" fill="url(#math-poly)" opacity="0.95"/>
+    <polygon points="0,-100 0,0 86,50" fill="#FF8C72" opacity="0.8"/>
+    <polygon points="0,-100 0,0 -86,50" fill="#7A66AC" opacity="0.7"/>
+    <polygon points="0,0 86,50 0,100" fill="#FF5733" opacity="0.9"/>
+    <polygon points="0,0 -86,50 0,100" fill="#5E4399" opacity="0.85"/>
+    <circle cx="0" cy="0" r="8" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Parabolic Curve & Sine Wave -->
+  <path d="M 120,380 Q 260,120 400,240 T 680,120" fill="none" stroke="#FF6B4A" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+  <path d="M 150,410 Q 280,180 400,280 T 650,200" fill="none" stroke="#8E7DBE" stroke-width="2.5" stroke-dasharray="6,6" opacity="0.6"/>
+
+  <!-- Compass / Protractor elements -->
+  <circle cx="180" cy="180" r="60" fill="none" stroke="#FFAB97" stroke-width="3" opacity="0.7"/>
+  <line x1="180" y1="120" x2="180" y2="240" stroke="#FFAB97" stroke-width="2" opacity="0.7"/>
+  <line x1="120" y1="180" x2="240" y2="180" stroke="#FFAB97" stroke-width="2" opacity="0.7"/>
+
+  <!-- Floating Formula Badges -->
+  <g transform="translate(140, 290)" filter="url(#math-shadow)">
+    <rect width="130" height="50" rx="16" fill="url(#math-card)"/>
+    <text x="65" y="32" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800" fill="#2A2833" text-anchor="middle">a² + b² = c²</text>
+  </g>
+
+  <g transform="translate(560, 280)" filter="url(#math-shadow)">
+    <rect width="110" height="50" rx="16" fill="url(#math-card)"/>
+    <text x="55" y="32" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800" fill="#7B5ABF" text-anchor="middle">π ≈ 3.14</text>
+  </g>
+
+  <g transform="translate(540, 110)" filter="url(#math-shadow)">
+    <rect width="90" height="46" rx="14" fill="url(#math-card)"/>
+    <text x="45" y="29" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" fill="#E05D44" text-anchor="middle">f(x) = y</text>
+  </g>
+
+  <!-- Sparkles / Dots -->
+  <circle cx="280" cy="110" r="4" fill="#FF6B4A"/>
+  <circle cx="510" cy="390" r="5" fill="#8E7DBE"/>
+  <circle cx="680" cy="240" r="3" fill="#FFAB97"/>
+</svg>

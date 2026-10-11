@@ -97,29 +97,29 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
   return (
     <div
       id="book-trial-form"
-      className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-xl shadow-slate-200/50 space-y-6 relative overflow-hidden"
+      className="bg-white rounded-4xl border border-[#EDE4D5] p-6 sm:p-8 shadow-warm-lg space-y-6 relative overflow-hidden"
     >
-      {/* Decorative accent banner */}
-      <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-sky-500 via-indigo-500 to-emerald-500" />
+      {/* Decorative Warm Coral / Lavender Top Bar */}
+      <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-coral-500 via-coral-400 to-lavender-500" />
 
       {/* Header */}
-      <div className="space-y-1.5 border-b border-slate-100 pb-4">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-700 text-xs font-bold">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Step 1 of 2: Parent & Course Info</span>
+      <div className="space-y-2 border-b border-[#EDE4D5] pb-5">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-coral-50 border border-coral-200 text-coral-700 text-xs font-bold">
+          <Sparkles className="w-3.5 h-3.5 text-coral-500" />
+          <span>Step 1 of 2: Parent &amp; Course Details</span>
         </div>
-        <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+        <h2 className="text-2xl font-display font-black text-charcoal-900 tracking-tight">
           Book Your Free Trial Class
         </h2>
-        <p className="text-xs sm:text-sm text-slate-600">
-          Tell us about your child and select your course. In the next step, you’ll pick your preferred live appointment slot.
+        <p className="text-xs sm:text-sm text-charcoal-600 leading-relaxed">
+          Experience a personalized 1-on-1 demo with an expert educator. In Step 2, you&apos;ll pick your live appointment time.
         </p>
       </div>
 
-      {/* Global Error Banner if any */}
+      {/* Global Error Message */}
       {errorMessage && (
-        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2.5">
-          <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+        <div className="p-4 rounded-2xl bg-coral-50 border border-coral-200 text-coral-800 text-xs flex items-start gap-2.5">
+          <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-coral-600" />
           <div>
             <strong className="block font-bold">Please check the form:</strong>
             <span>{errorMessage}</span>
@@ -127,17 +127,21 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
         </div>
       )}
 
-      {/* Active Selected Course Indicator */}
+      {/* Currently Selected Course Visual Indicator */}
       {selectedCourse && (
-        <div className="p-3.5 rounded-2xl bg-gradient-to-r from-sky-50 to-indigo-50 border border-sky-100 flex items-center justify-between text-xs">
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-sky-600 flex-shrink-0" />
+        <div className="p-4 rounded-2xl bg-cream-100 border border-[#EDE4D5] flex items-center justify-between text-xs">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-coral-500 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+              <CheckCircle2 className="w-4 h-4" />
+            </div>
             <div>
-              <span className="text-slate-500 font-medium block">Selected Course:</span>
-              <span className="font-bold text-slate-900">{selectedCourse.name}</span>
+              <span className="text-charcoal-500 font-medium block text-[11px] uppercase tracking-wider">
+                Selected Course
+              </span>
+              <span className="font-display font-bold text-charcoal-900 text-sm">{selectedCourse.name}</span>
             </div>
           </div>
-          <span className="px-2 py-1 rounded-lg bg-white border border-sky-200 text-sky-700 font-bold text-[11px] shadow-sm">
+          <span className="px-2.5 py-1 rounded-full bg-white border border-[#EDE4D5] text-charcoal-700 font-bold text-[11px] shadow-warm-sm">
             {selectedCourse.ageRange}
           </span>
         </div>
@@ -147,11 +151,11 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
         {/* Parent Full Name */}
         <div>
-          <label htmlFor="parentName" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-            Parent / Guardian Full Name <span className="text-rose-500">*</span>
+          <label htmlFor="parentName" className="block text-xs font-bold uppercase tracking-wider text-charcoal-700 mb-1.5">
+            Parent / Guardian Full Name <span className="text-coral-500">*</span>
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-charcoal-400">
               <User className="w-4 h-4" />
             </div>
             <input
@@ -160,15 +164,15 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
               disabled={isSubmitting}
               placeholder="e.g. Sarah Jenkins"
               {...register('parentName')}
-              className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 transition-all ${
+              className={`w-full pl-10 pr-4 py-3 bg-cream-50 border rounded-2xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                 errors.parentName
-                  ? 'border-rose-300 focus:ring-rose-500 focus:border-rose-500 bg-rose-50/20'
-                  : 'border-slate-300 focus:ring-sky-500 focus:border-sky-500'
+                  ? 'border-coral-300 focus:ring-coral-500 focus:border-coral-500 bg-coral-50/30'
+                  : 'border-[#EDE4D5] focus:ring-coral-500 focus:border-coral-500'
               }`}
             />
           </div>
           {errors.parentName && (
-            <p className="mt-1 text-xs text-rose-600 font-medium flex items-center gap-1">
+            <p className="mt-1.5 text-xs text-coral-600 font-medium flex items-center gap-1">
               <AlertCircle className="w-3.5 h-3.5" />
               {errors.parentName.message}
             </p>
@@ -177,11 +181,11 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
 
         {/* Parent Email */}
         <div>
-          <label htmlFor="parentEmail" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-            Email Address <span className="text-rose-500">*</span>
+          <label htmlFor="parentEmail" className="block text-xs font-bold uppercase tracking-wider text-charcoal-700 mb-1.5">
+            Email Address <span className="text-coral-500">*</span>
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-charcoal-400">
               <Mail className="w-4 h-4" />
             </div>
             <input
@@ -190,15 +194,15 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
               disabled={isSubmitting}
               placeholder="e.g. sarah.jenkins@example.com"
               {...register('parentEmail')}
-              className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 transition-all ${
+              className={`w-full pl-10 pr-4 py-3 bg-cream-50 border rounded-2xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                 errors.parentEmail
-                  ? 'border-rose-300 focus:ring-rose-500 focus:border-rose-500 bg-rose-50/20'
-                  : 'border-slate-300 focus:ring-sky-500 focus:border-sky-500'
+                  ? 'border-coral-300 focus:ring-coral-500 focus:border-coral-500 bg-coral-50/30'
+                  : 'border-[#EDE4D5] focus:ring-coral-500 focus:border-coral-500'
               }`}
             />
           </div>
           {errors.parentEmail && (
-            <p className="mt-1 text-xs text-rose-600 font-medium flex items-center gap-1">
+            <p className="mt-1.5 text-xs text-coral-600 font-medium flex items-center gap-1">
               <AlertCircle className="w-3.5 h-3.5" />
               {errors.parentEmail.message}
             </p>
@@ -207,8 +211,8 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
 
         {/* Phone Number with Country Code */}
         <div>
-          <label htmlFor="phoneNumber" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-            Phone Number <span className="text-rose-500">*</span>
+          <label htmlFor="phoneNumber" className="block text-xs font-bold uppercase tracking-wider text-charcoal-700 mb-1.5">
+            Phone Number <span className="text-coral-500">*</span>
           </label>
           <div className="grid grid-cols-12 gap-2">
             <div className="col-span-5 sm:col-span-4">
@@ -216,17 +220,17 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
                 id="countryCode"
                 disabled={isSubmitting}
                 {...register('countryCode')}
-                className="w-full px-2.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                className="w-full px-2.5 py-3 bg-cream-50 border border-[#EDE4D5] rounded-2xl text-xs sm:text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-all"
               >
                 {COUNTRY_CODES.map((item) => (
                   <option key={item.code} value={item.code}>
-                    {item.flag} {item.code} ({item.country})
+                    {item.flag} {item.code}
                   </option>
                 ))}
               </select>
             </div>
             <div className="col-span-7 sm:col-span-8 relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-charcoal-400">
                 <Phone className="w-4 h-4" />
               </div>
               <input
@@ -235,16 +239,16 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
                 disabled={isSubmitting}
                 placeholder="555-0199"
                 {...register('phoneNumber')}
-                className={`w-full pl-10 pr-3 py-2.5 bg-slate-50 border rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 transition-all ${
+                className={`w-full pl-10 pr-3 py-3 bg-cream-50 border rounded-2xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                   errors.phoneNumber
-                    ? 'border-rose-300 focus:ring-rose-500 focus:border-rose-500 bg-rose-50/20'
-                    : 'border-slate-300 focus:ring-sky-500 focus:border-sky-500'
+                    ? 'border-coral-300 focus:ring-coral-500 focus:border-coral-500 bg-coral-50/30'
+                    : 'border-[#EDE4D5] focus:ring-coral-500 focus:border-coral-500'
                 }`}
               />
             </div>
           </div>
           {errors.phoneNumber && (
-            <p className="mt-1 text-xs text-rose-600 font-medium flex items-center gap-1">
+            <p className="mt-1.5 text-xs text-coral-600 font-medium flex items-center gap-1">
               <AlertCircle className="w-3.5 h-3.5" />
               {errors.phoneNumber.message}
             </p>
@@ -253,11 +257,11 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
 
         {/* Course Selection */}
         <div>
-          <label htmlFor="courseId" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-            Course Choice <span className="text-rose-500">*</span>
+          <label htmlFor="courseId" className="block text-xs font-bold uppercase tracking-wider text-charcoal-700 mb-1.5">
+            Selected Course <span className="text-coral-500">*</span>
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-charcoal-400">
               <BookOpen className="w-4 h-4" />
             </div>
             <select
@@ -265,10 +269,10 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
               disabled={isSubmitting}
               value={watch('courseId')}
               onChange={handleCourseChange}
-              className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 transition-all ${
+              className={`w-full pl-10 pr-4 py-3 bg-cream-50 border rounded-2xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                 errors.courseId
-                  ? 'border-rose-300 focus:ring-rose-500 focus:border-rose-500'
-                  : 'border-slate-300 focus:ring-sky-500 focus:border-sky-500'
+                  ? 'border-coral-300 focus:ring-coral-500 focus:border-coral-500'
+                  : 'border-[#EDE4D5] focus:ring-coral-500 focus:border-coral-500'
               }`}
             >
               {COURSES.map((course) => (
@@ -279,21 +283,21 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
             </select>
           </div>
           {errors.courseId && (
-            <p className="mt-1 text-xs text-rose-600 font-medium flex items-center gap-1">
+            <p className="mt-1.5 text-xs text-coral-600 font-medium flex items-center gap-1">
               <AlertCircle className="w-3.5 h-3.5" />
               {errors.courseId.message}
             </p>
           )}
         </div>
 
-        {/* Student Name (Optional) */}
+        {/* Student Name & Grade Group */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label htmlFor="studentName" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-              Child&apos;s Name <span className="text-slate-400 font-normal">(Optional)</span>
+            <label htmlFor="studentName" className="block text-xs font-bold uppercase tracking-wider text-charcoal-700 mb-1.5">
+              Child&apos;s Name <span className="text-charcoal-400 font-normal">(Optional)</span>
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-charcoal-400">
                 <User className="w-4 h-4" />
               </div>
               <input
@@ -302,25 +306,24 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
                 disabled={isSubmitting}
                 placeholder="e.g. Leo"
                 {...register('studentName')}
-                className="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                className="w-full pl-10 pr-3 py-3 bg-cream-50 border border-[#EDE4D5] rounded-2xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-all"
               />
             </div>
           </div>
 
-          {/* Student Grade */}
           <div>
-            <label htmlFor="studentGrade" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-              Grade / Age Group
+            <label htmlFor="studentGrade" className="block text-xs font-bold uppercase tracking-wider text-charcoal-700 mb-1.5">
+              Grade Group
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-charcoal-400">
                 <GraduationCap className="w-4 h-4" />
               </div>
               <select
                 id="studentGrade"
                 disabled={isSubmitting}
                 {...register('studentGrade')}
-                className="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                className="w-full pl-10 pr-3 py-3 bg-cream-50 border border-[#EDE4D5] rounded-2xl text-xs sm:text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-all"
               >
                 <option value="Grade 1-3 (Ages 6-8)">Grade 1-3 (Ages 6-8)</option>
                 <option value="Grade 4-6 (Ages 9-11)">Grade 4-6 (Ages 9-11)</option>
@@ -333,40 +336,40 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
 
         {/* Optional Notes */}
         <div>
-          <label htmlFor="notes" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
-            Learning Goals / Notes <span className="text-slate-400 font-normal">(Optional)</span>
+          <label htmlFor="notes" className="block text-xs font-bold uppercase tracking-wider text-charcoal-700 mb-1.5">
+            Learning Goals / Notes <span className="text-charcoal-400 font-normal">(Optional)</span>
           </label>
           <div className="relative">
-            <div className="absolute top-3 left-3.5 pointer-events-none text-slate-400">
+            <div className="absolute top-3.5 left-3.5 pointer-events-none text-charcoal-400">
               <FileText className="w-4 h-4" />
             </div>
             <textarea
               id="notes"
               rows={2}
               disabled={isSubmitting}
-              placeholder="e.g. Any prior coding or math interests..."
+              placeholder="e.g. Any prior coding, math, or robotics background..."
               {...register('notes')}
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+              className="w-full pl-10 pr-4 py-3 bg-cream-50 border border-[#EDE4D5] rounded-2xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-all"
             />
           </div>
         </div>
 
-        {/* Submit Action */}
+        {/* Submit Action: Standout Coral CTA */}
         <div className="pt-2">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-sky-600 via-indigo-600 to-indigo-700 hover:from-sky-700 hover:via-indigo-700 hover:to-indigo-800 text-white font-extrabold text-sm sm:text-base shadow-lg shadow-sky-600/25 hover:shadow-sky-600/35 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-4 px-6 rounded-full bg-coral-500 hover:bg-coral-600 text-white font-display font-extrabold text-sm sm:text-base shadow-coral-glow hover:shadow-warm-lg focus:outline-none focus:ring-2 focus:ring-coral-500 focus:ring-offset-2 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
           >
             {isSubmitting ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Processing Parent Information...</span>
+                <span>Saving Parent Information...</span>
               </>
             ) : (
               <>
-                <span>Continue to Select Date & Slot</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Book My Free Trial</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </>
             )}
           </button>
@@ -374,7 +377,7 @@ export const ParentBookingForm: React.FC<ParentBookingFormProps> = ({
       </form>
 
       {/* Trust reassurance */}
-      <div className="pt-2 flex items-center justify-center gap-2 text-[11px] text-slate-500 border-t border-slate-100">
+      <div className="pt-2 flex items-center justify-center gap-2 text-xs text-charcoal-600 border-t border-[#EDE4D5]">
         <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
         <span>100% Free Trial Class • No credit card required</span>
       </div>

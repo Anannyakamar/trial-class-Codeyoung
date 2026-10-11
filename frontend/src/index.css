@@ -4,7 +4,26 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 min-h-screen selection:bg-sky-500 selection:text-white;
+    @apply bg-[#FAF8F5] text-charcoal-900 font-sans min-h-screen selection:bg-coral-500 selection:text-white antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight text-charcoal-900;
+  }
+}
+
+/* Smooth custom transitions */
+.transition-smooth {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Card hover lift effect */
+.card-hover {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -6px rgba(42, 40, 51, 0.1), 0 4px 12px -2px rgba(42, 40, 51, 0.05);
 }

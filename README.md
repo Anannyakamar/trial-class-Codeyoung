@@ -23,12 +23,12 @@ This system solves all three challenges using `@js-temporal/polyfill` for native
 | Layer | Technology | Version | Purpose & Key Features |
 |---|---|---|---|
 | **Runtime** | Node.js | v20.x+ (Tested on v24.19.0 LTS) | JavaScript runtime with native ESM support. |
-| **Frontend** | React, TypeScript, Vite, Tailwind CSS | React 18.3.1, Vite 5.4.21, Tailwind 3.4.17 | Responsive two-column booking interface, interactive 14-day date selector, 30-min slot grid, confirmation receipts. |
+| **Frontend** | React, TypeScript, Vite, Tailwind CSS | React 18.3.1, Vite 5.4.21, Tailwind 3.4.17 | Premium EdTech redesign: warm ivory background (`#FAF8F5`), rich coral CTA (`#FF6B4A`), soft lavender accents (`#8E7DBE`), Plus Jakarta Sans headings, Inter body text, dedicated vector course cover assets. |
 | **Form Management** | React Hook Form + Zod | RHF 7.54.2, Zod 3.24.2 | Uncontrolled components with client-side boundary validation. |
 | **Backend API** | Node.js, Express, TypeScript, Zod | Express 4.21.2, TS 5.7.3, Zod 3.24.2 | Modular monolith architecture with request validation and centralized error middleware. |
 | **Database & ORM** | SQLite + Prisma ORM | Prisma Client 6.19.3 | **Zero-config persistent relational database** (`backend/prisma/dev.db`). No PostgreSQL or Docker setup required. |
 | **Timezone Logic** | `@js-temporal/polyfill` + IANA DB | `@js-temporal/polyfill` 0.4.4 | Exact UTC instant persistence, wall-clock translations, DST gap/overlap disambiguation. |
-| **Testing** | Vitest + Supertest | Vitest 3.2.7, Supertest 7.0.0 | **58 automated tests** covering timezone math, DST transitions, API contracts, persistence, and concurrency. |
+| **Testing** | Vitest + Supertest | Vitest 3.2.7, Supertest 7.0.0 | **74 automated tests** covering timezone math, DST transitions, API contracts, persistence, concurrency, image integrity, and form validation. |
 
 ---
 
@@ -63,22 +63,26 @@ trial-class-Codeyoung/
 │   │   ├── utils/timezone.ts      # @js-temporal/polyfill timezone & DST engine
 │   │   ├── app.ts                 # Express application factory
 │   │   └── index.ts               # Server bootstrap entry point
-│   ├── tests/                     # 43 backend unit, integration, and persistence tests
+│   ├── tests/                     # 44 backend unit, integration, and persistence tests
 │   └── tsconfig.json
 │
 └── frontend/                      # React + Vite Frontend
+    ├── public/
+    │   └── courses/               # 6 dedicated course SVGs + educational hero illustration
     ├── src/
     │   ├── api/client.ts          # Typed HTTP API client & error classes
     │   ├── components/
-    │   │   ├── booking/           # TimezoneSelector, DatePicker, SlotGrid, BookingForm
+    │   │   ├── catalog/           # CourseCard, CourseModal, ParentBookingForm
+    │   │   ├── booking/           # TimezoneSelector, DatePicker, SlotGrid, BookingForm, BookingConfirmationView
     │   │   └── layout/            # Navbar, Footer, Layout shell
-    │   ├── pages/                 # BookingPage, ConfirmationPage, ManageBookingPage
+    │   ├── data/courses.ts        # Centralized course catalog, SVG covers, and transparent sample pricing
+    │   ├── pages/                 # LandingPage, BookingPage, ConfirmationPage, NotFoundPage
     │   ├── utils/timezone.ts      # Reusable client timezone formatters
-    │   ├── App.tsx                # React Router routes
+    │   ├── App.tsx                # Two-page React Router configuration
     │   ├── main.tsx               # Entry point
-    │   └── index.css              # Tailwind CSS directives
+    │   └── index.css              # Warm tokens, card-hover lift styles, Plus Jakarta Sans typography
     ├── vite.config.ts
-    └── tailwind.config.js
+    └── tailwind.config.js         # Warm ivory, cream, coral, lavender, and charcoal palette tokens
 ```
 
 ---
@@ -146,7 +150,7 @@ npm run prisma:reset
 | `npm run dev:backend` | Starts only the Express API with hot-reloading (`tsx watch`). |
 | `npm run dev:frontend` | Starts only the Vite frontend dev server. |
 | `npm run build` | Compiles backend TypeScript (`tsc`) and builds frontend production bundle. |
-| `npm test` | Runs all 58 unit, integration, persistence, and timezone test suites. |
+| `npm test` | Runs all 74 unit, integration, persistence, and timezone test suites. |
 | `npm run setup` | Generates Prisma client, deploys migrations, seeds initial data, and builds. |
 | `npm run prisma:reset` | Resets the SQLite database and reseeds initial mentors. |
 
@@ -206,10 +210,10 @@ Run the entire test suite across frontend and backend:
 npm test
 ```
 
-### Verified Test Results (**58 Tests Passed, 0 Failures**)
+### Verified Test Results (**74 Tests Passed, 0 Failures**)
 
 ```
-Backend Test Suites (43 passed):
+Backend Test Suites (44 passed):
 ✓ tests/unit/bookingLogic.test.ts (6 tests)
   - Load balancing (least booked today)
   - Historical fairness tie-breaking
@@ -228,9 +232,10 @@ Backend Test Suites (43 passed):
   - UTC instant round-trip integrity
   - Mentor-local daily capacity around UTC midnight
   - 30-minute slot duration consistency across DST shifts
-✓ tests/integration/api.test.ts (5 tests)
+✓ tests/integration/api.test.ts (6 tests)
   - Health check endpoint
   - Validation error routing & 404 handling
+  - Optional studentName, phoneNumber, courseName schema support
 ✓ tests/integration/reliability.test.ts (7 tests)
   - Past-time booking prevention
   - Malformed email & invalid timezone validation
@@ -244,7 +249,25 @@ Backend Test Suites (43 passed):
   - Complete booking creation, persistence, retrieval, and cancellation
   - Idempotent schema startup verification (retaining existing data)
 
-Frontend Test Suites (15 passed):
+Frontend Test Suites (30 passed):
+✓ src/utils/confirmationView.test.ts (5 tests)
+  - Complete booking metadata and confirmation UUID format
+  - Dual timezone schedule formatting (parent & mentor local times)
+  - Parent, phone, student name & grade identification
+  - Assigned mentor credentials & bio display
+  - Genuine backend meeting link with simulation disclosures
+✓ src/data/courses.test.ts (6 tests)
+  - All 6 required courses presence (Mathematics, Science, Arithmetic, Cyber Security, Web Development, Python Programming)
+  - Dedicated and unique vector cover images for all 6 courses
+  - Educational metadata, outcomes, grade ranges, and prerequisites integrity
+  - Transparent sample catalog pricing with placeholder disclaimers
+  - getCourseById helper resolution
+  - Supported international country codes list
+✓ src/utils/parentBookingFormValidation.test.ts (4 tests)
+  - Parent name, email, and phone validation rules
+  - Country code dropdown and phone number formatting
+  - Short name & invalid email format rejection
+  - Mandatory course selection enforcement
 ✓ src/api/client.test.ts (1 test)
 ✓ src/api/clientIntegration.test.ts (1 test)
 ✓ src/api/errorHandling.test.ts (2 tests)
@@ -263,30 +286,50 @@ Frontend Test Suites (15 passed):
 npm run build
 ```
 - **Backend TypeScript (`tsc`)**: Compiled with **0 errors**.
-- **Frontend Vite Bundle**: Production bundle built with **0 errors** (gzip: 5.68 kB CSS, 89.48 kB JS).
+- **Frontend Vite Bundle**: Production bundle built with **0 errors** (gzip: 7.29 kB CSS, 101.71 kB JS).
 
 ---
 
-## 💻 11. User Interface Flows
+## 💻 11. Two-Page Workflow & User Interface Architecture
 
-1. **Trial Class Booking (`/`)**:
-   - Auto-detects user timezone; offers instant timezone switching across US, UK, and India.
-   - 14-day interactive date selector.
-   - Dynamic 30-minute slot grid with live mentor availability count and mentor local time badge.
-   - Booking form with client-side Zod validation and double-submission protection.
-2. **Booking Confirmation (`/confirmation/:id`)**:
-   - Displays reference UUID, assigned mentor name, parent local time with UTC offset, and mentor local time (`IST`).
-   - Simulated live-class meeting URL (`https://meet.codeyoung.com/trial-<UUID>`) with one-click copy and join buttons.
-   - Fully accessible on page reload or direct link sharing.
-3. **Manage & Cancel Booking (`/manage`)**:
-   - Lookup by booking reference ID.
-   - Status badge (`CONFIRMED` / `CANCELLED`).
-   - Confirmation modal to cancel appointments and immediately release mentor capacity back to the available pool.
+The public website consists of **two main pages**:
+
+1. **Page 1: Course Landing Page (`/`)**:
+   - **Header**: Codeyoung branding, navigation links (`Home`, `Courses`, `How It Works`, `Contact`), and a prominent `Book a Trial` button.
+   - **Hero Section**: High-trust value proposition highlighting 1-on-1 personalized STEM, math, and coding learning for children ages 6–18.
+   - **Two-Column Main Layout (Desktop)**:
+     - **Left Side — Course Catalog**: Showcases 6 courses:
+       1. *Mathematics*
+       2. *Science*
+       3. *Arithmetic*
+       4. *Cyber Security*
+       5. *Web Development*
+       6. *Python Programming*
+       Each course card displays course name, short description, suitable age/grade range, sample price with billing period and currency, a "View Details" button (opening an in-depth syllabus modal), and a "Book a Trial" button.
+     - **Right Side — Parent Booking Form**: Dedicated "Book Your Free Trial Class" panel with parent full name, email address, phone number with country code selector, course dropdown (synced with catalog cards), optional child's name, and grade level. Features robust inline validation and loading states.
+   - **How It Works & FAQ Sections**: Clear 3-step walkthrough and parent FAQs.
+   - **Workflow Transition**: Validates parent information and passes state into Page 2.
+
+2. **Page 2: Trial Booking Interface & Confirmation Screen (`/book-trial`)**:
+   - **Step 1 Review**: Review selected course, parent details, phone, and child's information.
+   - **Date & Slot Selection**: Interactive calendar, timezone selector (US, UK, India), and live 30-minute slot grid with active mentor availability counts.
+   - **Booking Execution**: Submits to backend with ACID concurrency control and idempotent protection.
+   - **Dedicated Confirmation Screen**: Upon successful booking creation, Page 2 immediately displays complete confirmation details:
+     - **Booking Details**: Reference UUID, Course Name, Scheduled Date, Start and End Times, Timezone labels, and `CONFIRMED` status.
+     - **Parent Details**: Parent Full Name, Email, Phone Number, Child's Name and Grade.
+     - **Assigned Mentor Details**: Mentor Full Name, Mentor Timezone (`Asia/Kolkata (IST)`), Educator Bio / Credentials.
+     - **Meeting Details**: Instant live video classroom URL, a prominent "Join Trial Class" button, a "Copy Meeting Link" action with visual feedback, and a demo classroom simulation disclosure.
+     - **Return Action**: "← Book Another Trial Class" button returning to the Course Catalog (`/`).
+   - Manage Booking links, buttons, and pages are completely removed from the public website.
 
 ---
 
 ## 🔧 12. Troubleshooting & FAQ
 
+- **Windows PowerShell Script Execution Policy (`PSSecurityException`)**: If PowerShell blocks `npm.ps1`, you can either run `npm.cmd install` / `npm.cmd run dev:all`, or enable script execution for your user account:
+  ```powershell
+  Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+  ```
 - **Port Conflict on 5000 or 5173**: If port 5000 is occupied, you can specify `PORT=4000 npm run dev:backend` or update `backend/.env`.
 - **Resetting the Database**: If you wish to delete all trial bookings and start fresh with original sample mentors, run `npm run prisma:reset`.
 - **Database Location**: The SQLite database file resides at `backend/prisma/dev.db`.

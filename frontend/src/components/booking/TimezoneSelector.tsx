@@ -1,5 +1,5 @@
 import React from 'react';
-import { Globe, Clock } from 'lucide-react';
+import { Globe2, Clock } from 'lucide-react';
 import { COMMON_TIMEZONES } from '../../utils/timezone.js';
 
 interface TimezoneSelectorProps {
@@ -15,18 +15,18 @@ export const TimezoneSelector: React.FC<TimezoneSelectorProps> = ({
 }) => {
   return (
     <div className="space-y-1.5">
-      <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600">
+      <label className="block text-xs font-bold uppercase tracking-wider text-charcoal-700">
         Your Timezone
       </label>
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-          <Globe className="w-4 h-4 text-sky-600" />
+        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-coral-500">
+          <Globe2 className="w-4 h-4" />
         </div>
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
-          className="w-full pl-10 pr-10 py-2.5 bg-white border border-slate-300 rounded-xl text-sm font-medium text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+          className="w-full pl-10 pr-10 py-3 bg-cream-50 border border-[#EDE4D5] rounded-2xl text-sm font-medium text-charcoal-800 shadow-warm-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {COMMON_TIMEZONES.map((tz) => (
             <option key={tz.value} value={tz.value}>
@@ -37,12 +37,12 @@ export const TimezoneSelector: React.FC<TimezoneSelectorProps> = ({
             <option value={value}>{value}</option>
           )}
         </select>
-        <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
-          <Clock className="w-4 h-4 text-slate-400" />
+        <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-charcoal-400">
+          <Clock className="w-4 h-4" />
         </div>
       </div>
-      <p className="text-xs text-slate-500 flex items-center gap-1">
-        <span>All slot times below will automatically display in this timezone.</span>
+      <p className="text-xs text-charcoal-500 flex items-center gap-1">
+        <span>Available trial slots automatically convert to your local wall-clock time.</span>
       </p>
     </div>
   );

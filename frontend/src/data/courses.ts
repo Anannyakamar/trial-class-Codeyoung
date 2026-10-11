@@ -23,9 +23,11 @@ export interface Course {
   keyTopics: string[];
   prerequisites: string;
   pricing: CoursePricing;
+  coverImage: string;
   iconName: 'Calculator' | 'FlaskConical' | 'Binary' | 'ShieldAlert' | 'Layout' | 'Code2';
-  colorGradient: string;
-  accentColor: string;
+  themeColor: string;
+  badgeBg: string;
+  badgeText: string;
 }
 
 /**
@@ -64,9 +66,11 @@ export const COURSES: Course[] = [
       isSample: true,
       disclaimer: 'Sample demo catalog pricing for demonstration purposes.',
     },
+    coverImage: '/courses/mathematics.svg',
     iconName: 'Calculator',
-    colorGradient: 'from-blue-500 to-indigo-600',
-    accentColor: 'text-blue-600',
+    themeColor: '#FF6B4A',
+    badgeBg: 'bg-coral-50 border-coral-200',
+    badgeText: 'text-coral-700',
   },
   {
     id: 'science',
@@ -98,9 +102,11 @@ export const COURSES: Course[] = [
       isSample: true,
       disclaimer: 'Sample demo catalog pricing for demonstration purposes.',
     },
+    coverImage: '/courses/science.svg',
     iconName: 'FlaskConical',
-    colorGradient: 'from-emerald-500 to-teal-600',
-    accentColor: 'text-emerald-600',
+    themeColor: '#0F766E',
+    badgeBg: 'bg-emerald-50 border-emerald-200',
+    badgeText: 'text-emerald-800',
   },
   {
     id: 'arithmetic',
@@ -132,15 +138,17 @@ export const COURSES: Course[] = [
       isSample: true,
       disclaimer: 'Sample demo catalog pricing for demonstration purposes.',
     },
+    coverImage: '/courses/arithmetic.svg',
     iconName: 'Binary',
-    colorGradient: 'from-amber-500 to-orange-600',
-    accentColor: 'text-amber-600',
+    themeColor: '#D97706',
+    badgeBg: 'bg-amber-50 border-amber-200',
+    badgeText: 'text-amber-800',
   },
   {
     id: 'cyber-security',
     name: 'Cyber Security',
     category: 'Tech & Safety',
-    badge: 'Ethical Hacking',
+    badge: 'Digital Defense',
     ageRange: 'Ages 11–18',
     grades: 'Grades 6–12',
     durationPerClass: '30 mins (Trial) / 60 mins (Regular)',
@@ -166,9 +174,11 @@ export const COURSES: Course[] = [
       isSample: true,
       disclaimer: 'Sample demo catalog pricing for demonstration purposes.',
     },
+    coverImage: '/courses/cybersecurity.svg',
     iconName: 'ShieldAlert',
-    colorGradient: 'from-rose-500 to-pink-600',
-    accentColor: 'text-rose-600',
+    themeColor: '#7B5ABF',
+    badgeBg: 'bg-lavender-100 border-lavender-200',
+    badgeText: 'text-lavender-700',
   },
   {
     id: 'web-development',
@@ -200,9 +210,11 @@ export const COURSES: Course[] = [
       isSample: true,
       disclaimer: 'Sample demo catalog pricing for demonstration purposes.',
     },
+    coverImage: '/courses/webdev.svg',
     iconName: 'Layout',
-    colorGradient: 'from-violet-500 to-purple-600',
-    accentColor: 'text-violet-600',
+    themeColor: '#E84723',
+    badgeBg: 'bg-peach-100 border-peach-200',
+    badgeText: 'text-coral-800',
   },
   {
     id: 'python-programming',
@@ -234,9 +246,11 @@ export const COURSES: Course[] = [
       isSample: true,
       disclaimer: 'Sample demo catalog pricing for demonstration purposes.',
     },
+    coverImage: '/courses/python.svg',
     iconName: 'Code2',
-    colorGradient: 'from-sky-500 to-cyan-600',
-    accentColor: 'text-sky-600',
+    themeColor: '#4F46E5',
+    badgeBg: 'bg-lavender-100 border-lavender-200',
+    badgeText: 'text-lavender-700',
   },
 ];
 

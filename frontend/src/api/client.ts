@@ -57,6 +57,8 @@ export interface BookingParticipant {
   id?: string;
   name: string;
   email?: string;
+  phoneNumber?: string;
+  bio?: string;
   timezone: string;
   localDate: string;
   localStartTime: string;
@@ -73,6 +75,10 @@ export interface BookingData {
   endAtUtc: string;
   parentTimezone: string;
   mentorTimezone: string;
+  courseName?: string;
+  studentName?: string;
+  phoneNumber?: string;
+  studentGrade?: string;
   parent: BookingParticipant;
   mentor: BookingParticipant;
   simulationNotice?: string;

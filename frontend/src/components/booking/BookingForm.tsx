@@ -8,13 +8,9 @@ import {
   User,
   Mail,
   GraduationCap,
-  FileText,
   CheckCircle,
   AlertCircle,
   Clock,
-  BookOpen,
-  Phone,
-  ArrowLeft,
   Sparkles,
   ShieldCheck,
 } from 'lucide-react';
@@ -87,13 +83,13 @@ export const BookingForm: React.FC<BookingFormProps> = ({
 
   if (!selectedSlot) {
     return (
-      <div className="bg-white rounded-3xl border border-slate-200/90 p-8 text-center space-y-4 shadow-sm">
-        <div className="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mx-auto">
+      <div className="bg-white rounded-3xl border border-[#EDE4D5] p-8 text-center space-y-4 shadow-warm-md">
+        <div className="w-12 h-12 rounded-2xl bg-coral-50 text-coral-600 flex items-center justify-center mx-auto border border-coral-200">
           <Clock className="w-6 h-6" />
         </div>
         <div className="space-y-1 max-w-sm mx-auto">
-          <h3 className="text-base font-bold text-slate-800">Select an Appointment Slot</h3>
-          <p className="text-xs text-slate-500 leading-relaxed">
+          <h3 className="text-base font-extrabold text-charcoal-900">Select an Appointment Slot</h3>
+          <p className="text-xs text-charcoal-500 leading-relaxed">
             Choose a date and click any available time slot on the left to review and finalize your trial booking.
           </p>
         </div>
@@ -104,24 +100,24 @@ export const BookingForm: React.FC<BookingFormProps> = ({
   const isPending = loading || isSubmitting;
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-sm space-y-6">
+    <div className="bg-white rounded-3xl border border-[#EDE4D5] p-6 sm:p-8 shadow-warm-md space-y-6">
       {/* Header */}
-      <div className="border-b border-slate-100 pb-4 space-y-1">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 text-xs font-bold border border-sky-200">
-          <Sparkles className="w-3 h-3 text-sky-600" />
+      <div className="border-b border-[#EDE4D5]/70 pb-4 space-y-1">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-coral-50 text-coral-700 text-xs font-bold border border-coral-200">
+          <Sparkles className="w-3 h-3 text-coral-600" />
           Step 2 of 2: Finalize Slot
         </div>
-        <h3 className="text-xl font-bold text-slate-900">Review & Confirm Booking</h3>
-        <p className="text-xs text-slate-500">
+        <h3 className="text-xl font-black text-charcoal-900">Review & Confirm Booking</h3>
+        <p className="text-xs text-charcoal-500">
           An eligible mentor from our roster will be automatically assigned for your live trial class.
         </p>
       </div>
 
       {/* Selected Slot Summary Badge */}
-      <div className="p-4 rounded-2xl bg-gradient-to-r from-sky-50 to-indigo-50 border border-sky-100 space-y-2">
-        <div className="flex items-center justify-between text-xs font-bold text-sky-900">
+      <div className="p-4 rounded-2xl bg-[#FFF9F5] border border-coral-200/70 space-y-2">
+        <div className="flex items-center justify-between text-xs font-bold text-coral-800">
           <span className="flex items-center gap-1.5">
-            <CheckCircle className="w-4 h-4 text-sky-600" />
+            <CheckCircle className="w-4 h-4 text-coral-600" />
             Selected Appointment Slot
           </span>
           {onBackToSlots && (
@@ -129,30 +125,30 @@ export const BookingForm: React.FC<BookingFormProps> = ({
               type="button"
               onClick={onBackToSlots}
               disabled={isPending}
-              className="text-sky-600 hover:text-sky-800 text-xs font-semibold underline"
+              className="text-coral-600 hover:text-coral-800 text-xs font-bold underline"
             >
               Change Slot
             </button>
           )}
         </div>
-        <div className="text-sm sm:text-base font-extrabold text-slate-800">
+        <div className="text-sm sm:text-base font-black text-charcoal-900">
           {formatInstantDisplay(selectedSlot.startAt, parentTimezone)}
         </div>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-charcoal-600">
           <span>
-            Your Time: <strong>{formatTimeOnly(selectedSlot.startAt, parentTimezone)} ({selectedSlot.parentUtcOffset})</strong>
+            Your Time: <strong className="text-charcoal-800">{formatTimeOnly(selectedSlot.startAt, parentTimezone)} ({selectedSlot.parentUtcOffset})</strong>
           </span>
           <span>
-            Mentor Time: <strong>{selectedSlot.mentorLocalTime} IST</strong>
+            Mentor Time: <strong className="text-charcoal-800">{selectedSlot.mentorLocalTime} IST</strong>
           </span>
         </div>
       </div>
 
       {/* Step 1 Pre-filled Parent & Course Summary Card */}
       {isFromLanding && (
-        <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2.5 text-xs">
+        <div className="p-4 rounded-2xl bg-cream-50/60 border border-[#EDE4D5]/80 space-y-2.5 text-xs">
           <div className="flex items-center justify-between">
-            <span className="font-bold text-slate-700 uppercase tracking-wider text-[11px]">
+            <span className="font-bold text-charcoal-700 uppercase tracking-wider text-[11px]">
               Parent & Course Details (from Step 1)
             </span>
             {onEditParentInfo && (
@@ -160,35 +156,35 @@ export const BookingForm: React.FC<BookingFormProps> = ({
                 type="button"
                 onClick={onEditParentInfo}
                 disabled={isPending}
-                className="text-sky-600 hover:text-sky-800 font-bold text-[11px] underline flex items-center gap-1"
+                className="text-coral-600 hover:text-coral-800 font-bold text-[11px] underline flex items-center gap-1"
               >
                 <span>Edit Info</span>
               </button>
             )}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-700">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-charcoal-700">
             <div>
-              <span className="text-slate-400 block text-[10px] uppercase">Course</span>
-              <span className="font-bold text-slate-900">{bookingIntent?.courseName || 'Mathematics'}</span>
+              <span className="text-charcoal-400 block text-[10px] uppercase font-bold">Course</span>
+              <span className="font-extrabold text-charcoal-900">{bookingIntent?.courseName || 'Mathematics'}</span>
             </div>
             <div>
-              <span className="text-slate-400 block text-[10px] uppercase">Parent</span>
-              <span className="font-bold text-slate-900">{bookingIntent?.parentName}</span>
+              <span className="text-charcoal-400 block text-[10px] uppercase font-bold">Parent</span>
+              <span className="font-extrabold text-charcoal-900">{bookingIntent?.parentName}</span>
             </div>
             <div>
-              <span className="text-slate-400 block text-[10px] uppercase">Email</span>
-              <span className="font-medium text-slate-800">{bookingIntent?.parentEmail}</span>
+              <span className="text-charcoal-400 block text-[10px] uppercase font-bold">Email</span>
+              <span className="font-semibold text-charcoal-800">{bookingIntent?.parentEmail}</span>
             </div>
             {bookingIntent?.phoneNumber && (
               <div>
-                <span className="text-slate-400 block text-[10px] uppercase">Phone</span>
-                <span className="font-medium text-slate-800">{bookingIntent?.phoneNumber}</span>
+                <span className="text-charcoal-400 block text-[10px] uppercase font-bold">Phone</span>
+                <span className="font-semibold text-charcoal-800">{bookingIntent?.phoneNumber}</span>
               </div>
             )}
             {bookingIntent?.studentName && (
               <div>
-                <span className="text-slate-400 block text-[10px] uppercase">Student</span>
-                <span className="font-medium text-slate-800">{bookingIntent?.studentName} ({bookingIntent?.studentGrade})</span>
+                <span className="text-charcoal-400 block text-[10px] uppercase font-bold">Student</span>
+                <span className="font-semibold text-charcoal-800">{bookingIntent?.studentName} ({bookingIntent?.studentGrade})</span>
               </div>
             )}
           </div>
@@ -210,11 +206,11 @@ export const BookingForm: React.FC<BookingFormProps> = ({
         {!isFromLanding && (
           <>
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-charcoal-700 mb-1">
                 Parent Full Name <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-charcoal-400">
                   <User className="w-4 h-4" />
                 </div>
                 <input
@@ -222,10 +218,10 @@ export const BookingForm: React.FC<BookingFormProps> = ({
                   disabled={isPending}
                   placeholder="e.g. Sarah Jenkins"
                   {...register('parentName')}
-                  className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 transition-all ${
+                  className={`w-full pl-10 pr-4 py-2.5 bg-cream-50/40 border rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                     errors.parentName
                       ? 'border-rose-300 focus:ring-rose-500 focus:border-rose-500'
-                      : 'border-slate-300 focus:ring-sky-500 focus:border-sky-500'
+                      : 'border-[#EDE4D5] focus:ring-coral-400 focus:border-coral-500'
                   }`}
                 />
               </div>
@@ -235,11 +231,11 @@ export const BookingForm: React.FC<BookingFormProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-charcoal-700 mb-1">
                 Email Address <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-charcoal-400">
                   <Mail className="w-4 h-4" />
                 </div>
                 <input
@@ -247,10 +243,10 @@ export const BookingForm: React.FC<BookingFormProps> = ({
                   disabled={isPending}
                   placeholder="e.g. sarah.jenkins@example.com"
                   {...register('parentEmail')}
-                  className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 transition-all ${
+                  className={`w-full pl-10 pr-4 py-2.5 bg-cream-50/40 border rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                     errors.parentEmail
                       ? 'border-rose-300 focus:ring-rose-500 focus:border-rose-500'
-                      : 'border-slate-300 focus:ring-sky-500 focus:border-sky-500'
+                      : 'border-[#EDE4D5] focus:ring-coral-400 focus:border-coral-500'
                   }`}
                 />
               </div>
@@ -260,17 +256,17 @@ export const BookingForm: React.FC<BookingFormProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-charcoal-700 mb-1">
                 Student Grade / Age Group
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-charcoal-400">
                   <GraduationCap className="w-4 h-4" />
                 </div>
                 <select
                   disabled={isPending}
                   {...register('studentGrade')}
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                  className="w-full pl-10 pr-4 py-2.5 bg-cream-50/40 border border-[#EDE4D5] rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-coral-400 focus:border-coral-500 transition-all text-charcoal-800"
                 >
                   <option value="Grade 1-3 (Ages 6-8)">Grade 1-3 (Ages 6-8)</option>
                   <option value="Grade 4-6 (Ages 9-11)">Grade 4-6 (Ages 9-11)</option>
@@ -287,7 +283,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({
           <button
             type="submit"
             disabled={isPending}
-            className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-sky-600 via-indigo-600 to-indigo-700 hover:from-sky-700 hover:via-indigo-700 hover:to-indigo-800 text-white font-extrabold text-sm sm:text-base shadow-lg shadow-sky-600/25 hover:shadow-sky-600/35 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-3.5 px-6 rounded-2xl bg-coral-500 hover:bg-coral-600 text-white font-black text-sm sm:text-base shadow-warm-md hover:shadow-coral-glow focus:outline-none focus:ring-2 focus:ring-coral-400 focus:ring-offset-2 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isPending ? (
               <>
@@ -300,7 +296,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({
           </button>
         </div>
 
-        <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-500">
+        <div className="flex items-center justify-center gap-1.5 text-[11px] text-charcoal-500 font-medium">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
           <span>Live meeting link will be generated instantly upon confirmation</span>
         </div>
