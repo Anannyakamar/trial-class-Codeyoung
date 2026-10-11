@@ -1,0 +1,75 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model Mentor {
+  id             String               @id @default(uuid())
+  name           String
+  email          String               @unique
+  timezone       String               @default("Asia/Kolkata")
+  isActive       Boolean              @default(true)
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  availabilities MentorAvailability[]
+  bookings       Booking[]
+
+  @@index([isActive])
+  @@map("mentors")
+}
+
+model Parent {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  timezone  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bookings  Booking[]
+
+  @@map("parents")
+}
+
+model MentorAvailability {
+  id        String   @id @default(uuid())
+  mentorId  String
+  weekday   Int      // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  startTime String   // "09:00" in 24-hr format (mentor local time)
+  endTime   String   // "21:00" in 24-hr format (mentor local time)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  mentor    Mentor   @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+
+  @@index([mentorId, weekday])
+  @@map("mentor_availabilities")
+}
+
+model Booking {
+  id        String        @id @default(uuid())
+  parentId  String
+  mentorId  String
+  startAt   DateTime      // UTC Instant for appointment start
+  endAt     DateTime      // UTC Instant for appointment end (startAt + 30m)
+  status    BookingStatus @default(CONFIRMED)
+  classLink String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  parent    Parent        @relation(fields: [parentId], references: [id], onDelete: Restrict)
+  mentor    Mentor        @relation(fields: [mentorId], references: [id], onDelete: Restrict)
+
+  @@index([mentorId, startAt])
+  @@index([mentorId, status])
+  @@index([startAt, endAt])
+  @@map("bookings")
+}
